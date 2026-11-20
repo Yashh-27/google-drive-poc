@@ -1,0 +1,7 @@
+# Mock organisation folder-name lists: "entry_type: name, name". * stands for any text.
+# Entry types are eScanX's Manager.io ones; "ignore" holds the ignored names.
+# Bills*, *Receipts and Bills Paid exist only to test conflicts (GD-26).
+expense_claim: Expenses*, Dépenses
+purchase_invoice: Purchases, New, Unpaid, Bills*
+payment: Paid, *Receipts, Bills Paid
+ignore: Done

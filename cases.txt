@@ -1,0 +1,42 @@
+# Mock folder trees for the Drive import rules. Paths start under the shared folder "Clients".
+# "link: folder = connection" lines first, then "id | file path | expected result".
+# A backslash-u escape writes look-alike characters, such as a decomposed accent.
+
+link: Acme Ltd = Acme
+link: 2025/Beta Ltd = Beta
+link: 2026/Beta Ltd = Beta
+link: Purchases/Gamma Ltd = Gamma
+link: Group = Group Holding
+link: Group/Company A = Company A
+link: Group/Company B = Company B
+link: Expenses Direct Ltd = Expenses Direct
+
+S-01   | Acme Ltd/Expenses/2025/Feb/a.pdf                  | expense_claim @ Acme
+S-02   | Acme Ltd/2025/Expenses/2. Feb 2025/b.pdf          | expense_claim @ Acme
+S-03   | Acme Ltd/Expenses/c.pdf                           | expense_claim @ Acme
+S-04a  | 2025/Beta Ltd/Expenses/a.pdf                      | expense_claim @ Beta
+S-04b  | 2026/Beta Ltd/Expenses/b.pdf                      | expense_claim @ Beta
+S-05   | Purchases/Gamma Ltd/2025/a.pdf                    | purchase_invoice @ Gamma
+S-06a  | Acme Ltd/New/d.pdf                                | purchase_invoice @ Acme
+S-06b  | Acme Ltd/Done/e.pdf                               | ignored @ Acme
+S-07a  | Acme Ltd/Expenses/Paid/f.pdf                      | payment @ Acme
+S-07b  | Acme Ltd/Expenses/Unpaid/g.pdf                    | purchase_invoice @ Acme
+S-09   | Acme Ltd/Purchases/Supplier X/2025/h.pdf          | purchase_invoice @ Acme
+S-10a  | Acme Ltd/Expenses 2025/i.pdf                      | expense_claim @ Acme
+S-10b  | Acme Ltd/Expenses 2026/j.pdf                      | expense_claim @ Acme
+S-11a  | Group/Company A/Expenses/k.pdf                    | expense_claim @ Company A
+S-11b  | Group/Company B/Purchases/l.pdf                   | purchase_invoice @ Company B
+GD-12  | Group/Expenses/m.pdf                              | expense_claim @ Group Holding
+S-14a  | Acme Ltd/Payroll/n.pdf                            | no entry type @ Acme
+S-14b  | Acme Ltd/Tax returns/o.pdf                        | no entry type @ Acme
+C-16a  | Acme Ltd/EXPENSES/p.pdf                           | expense_claim @ Acme
+C-16b  | Acme Ltd/ Expenses /q.pdf                         | expense_claim @ Acme
+C-16c  | Acme Ltd/Dépenses/r.pdf                     | expense_claim @ Acme
+C-17   | Acme Ltd/Expences/s.pdf                           | no entry type @ Acme
+GD-25a | Acme Ltd/Done/Expenses/t.pdf                      | ignored @ Acme
+GD-25b | Acme Ltd/Expenses/Done/u.pdf                      | ignored @ Acme
+GD-26  | Acme Ltd/Bills and Receipts/v.pdf                 | conflict @ Acme
+EXACT  | Acme Ltd/Bills Paid/w.pdf                         | payment @ Acme
+NOLINK | Delta Ltd/Expenses/x.pdf                          | not linked
+DEPTH  | Acme Ltd/Expenses/2025/Q1/Jan/Week 1/Day 2/y.pdf  | too deep @ Acme
+NAME   | Expenses Direct Ltd/2025/z.pdf                    | expense_claim @ Expenses Direct
